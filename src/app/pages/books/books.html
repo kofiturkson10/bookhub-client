@@ -1,1 +1,16 @@
-<p>books works!</p>
+<h1>Böcker</h1>
+
+@if (books.length == 0) {
+    <p>Inga böcker än</p>
+} @else {
+    <a routerLink="/books/new">Lägg till ny bok</a>
+    <ul>
+        @for (book of books; track book.id) {
+            <li>
+                {{ book.title }} — {{ book.author }} ({{ book.publishedDate }})
+                <button (click)="deleteBook(book.id)">Radera</button>
+                <a [routerLink]="['/books', book.id, 'edit']">Redigera</a>
+            </li>
+        }
+    </ul>
+}

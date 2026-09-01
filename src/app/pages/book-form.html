@@ -1,0 +1,20 @@
+<h1>{{ bookId ? 'Redigera bok' : 'Lägg till bok' }}</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div>
+        <label for="title">Title</label>
+        <input id="title" type="text" formControlName="title" />
+    </div>
+
+    <div>
+        <label for="author">Författare</label>
+        <input id="author" type="text" formControlName="author" />
+    </div>
+
+    <div>
+        <label for="publishedDate">Publiseringsdatum</label>
+        <input id="publishedDate" type="date" formControlName="publishedDate" />
+    </div>
+
+    <button type="submit" [disabled]="form.invalid">Spara</button>
+</form>
