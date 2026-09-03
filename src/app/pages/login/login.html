@@ -1,1 +1,17 @@
-<p>login works!</p>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <label>
+        Användarnamn
+        <input type="text" formControlName="username" />
+    </label>
+
+    <label>
+        Lösenord
+        <input type="password" formControlName="password" />
+    </label>
+
+    @if (errorMessage()) {
+        <p class="error">{{ errorMessage() }}</p>
+    }
+
+    <button type="submit" [disabled]="form.invalid">Logga in</button>
+</form>
