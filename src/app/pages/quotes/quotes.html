@@ -1,1 +1,19 @@
-<p>quotes works!</p>
+<h2>Mina citat</h2>
+<a routerLink="/quotes/new">Lägg till citat</a>
+@if (error()) {
+  <p>{{ error() }}</p>
+}
+
+@if (quotes().length === 0) {
+  <p>Inga citat än.</p>
+} @else {
+  <ul>
+    @for (quote of quotes(); track quote.id) {
+      <li>
+        "{{ quote.text }}" — {{ quote.author }}
+        <a [routerLink]="['/quotes', quote.id, 'edit']">Redigera</a>
+        <button (click)="deleteQuote(quote.id)">Radera</button>
+      </li>
+    }
+  </ul>
+}

@@ -1,0 +1,7 @@
+@if (auth.isLoggedIn()) {
+  <nav>
+    <a routerLink="/books">Böcker</a>
+    <a routerLink="/quotes">Mina citat</a>
+    <button (click)="logout()">Logga ut</button>
+  </nav>
+}

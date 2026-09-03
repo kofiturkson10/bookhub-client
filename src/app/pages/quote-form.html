@@ -1,0 +1,21 @@
+<h2>Nytt citat</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="text">Citat</label>
+    <textarea id="text" formControlName="text"></textarea>
+    @if (form.controls.text.touched && form.controls.text.invalid) {
+      <small>Citattext krävs (max 500 tecken).</small>
+    }
+  </div>
+
+  <div>
+    <label for="author">Författare</label>
+    <input id="author" formControlName="author" />
+    @if (form.controls.author.touched && form.controls.author.invalid) {
+      <small>Författare krävs (max 100 tecken).</small>
+    }
+  </div>
+
+  <button type="submit" [disabled]="form.invalid">Spara</button>
+</form>
