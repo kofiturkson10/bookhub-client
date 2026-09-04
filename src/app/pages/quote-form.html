@@ -1,21 +1,36 @@
-<h2>Nytt citat</h2>
+<div class="container my-4">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+      <h2 class="mb-4">Nytt citat</h2>
 
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <div>
-    <label for="text">Citat</label>
-    <textarea id="text" formControlName="text"></textarea>
-    @if (form.controls.text.touched && form.controls.text.invalid) {
-      <small>Citattext krävs (max 500 tecken).</small>
-    }
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="text" class="form-label">Citat</label>
+          <textarea id="text" formControlName="text" rows="4"
+                    class="form-control"
+                    [class.is-invalid]="form.controls.text.touched && form.controls.text.invalid"></textarea>
+          @if (form.controls.text.touched && form.controls.text.invalid) {
+            <div class="invalid-feedback">Citattext krävs (max 500 tecken).</div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label for="author" class="form-label">Författare</label>
+          <input id="author" formControlName="author"
+                 class="form-control"
+                 [class.is-invalid]="form.controls.author.touched && form.controls.author.invalid" />
+          @if (form.controls.author.touched && form.controls.author.invalid) {
+            <div class="invalid-feedback">Författare krävs (max 100 tecken).</div>
+          }
+        </div>
+
+        <div class="d-flex gap-2">
+          <button type="submit" [disabled]="form.invalid" class="btn btn-primary">
+            <i class="fa-solid fa-floppy-disk"></i> Spara
+          </button>
+          <a routerLink="/quotes" class="btn btn-outline-secondary">Avbryt</a>
+        </div>
+      </form>
+    </div>
   </div>
-
-  <div>
-    <label for="author">Författare</label>
-    <input id="author" formControlName="author" />
-    @if (form.controls.author.touched && form.controls.author.invalid) {
-      <small>Författare krävs (max 100 tecken).</small>
-    }
-  </div>
-
-  <button type="submit" [disabled]="form.invalid">Spara</button>
-</form>
+</div>

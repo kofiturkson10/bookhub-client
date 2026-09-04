@@ -1,7 +1,46 @@
 @if (auth.isLoggedIn()) {
-  <nav>
-    <a routerLink="/books">Böcker</a>
-    <a routerLink="/quotes">Mina citat</a>
-    <button (click)="logout()">Logga ut</button>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" routerLink="/books" (click)="closeMenu()">
+        <i class="fa-solid fa-book"></i> BookHub
+      </a>
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        (click)="toggleMenu()"
+        [attr.aria-expanded]="menuOpen()"
+        aria-label="Växla navigering">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" [class.show]="menuOpen()" id="mainNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/books" routerLinkActive="active" (click)="closeMenu()">
+              <i class="fa-solid fa-book"></i> Böcker
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/quotes" routerLinkActive="active" (click)="closeMenu()">
+              <i class="fa-solid fa-quote-right"></i> Mina citat
+            </a>
+          </li>
+        </ul>
+
+        <button class="btn btn-outline-light me-2" type="button" (click)="theme.toggle()"
+                [attr.aria-label]="theme.theme() === 'dark' ? 'Byt till ljust tema' : 'Byt till mörkt tema'">
+          @if (theme.theme() === 'dark') {
+            <i class="fa-solid fa-sun"></i>
+          } @else {
+            <i class="fa-solid fa-moon"></i>
+          }
+        </button>
+
+        <button class="btn btn-outline-light" type="button" (click)="logout()">
+          <i class="fa-solid fa-right-from-bracket"></i> Logga ut
+        </button>
+      </div>
+    </div>
   </nav>
 }

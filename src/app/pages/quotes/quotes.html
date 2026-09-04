@@ -1,19 +1,46 @@
-<h2>Mina citat</h2>
-<a routerLink="/quotes/new">Lägg till citat</a>
-@if (error()) {
-  <p>{{ error() }}</p>
-}
+<div class="container my-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="mb-0">Mina citat</h2>
+    <a routerLink="/quotes/new" class="btn btn-primary">
+      <i class="fa-solid fa-plus"></i> Lägg till citat
+    </a>
+  </div>
 
-@if (quotes().length === 0) {
-  <p>Inga citat än.</p>
-} @else {
-  <ul>
-    @for (quote of quotes(); track quote.id) {
-      <li>
-        "{{ quote.text }}" — {{ quote.author }}
-        <a [routerLink]="['/quotes', quote.id, 'edit']">Redigera</a>
-        <button (click)="deleteQuote(quote.id)">Radera</button>
-      </li>
-    }
-  </ul>
-}
+  @if (error()) {
+    <div class="alert alert-danger" role="alert">{{ error() }}</div>
+  }
+
+  @if (quotes().length === 0) {
+    <p class="text-muted">Inga citat än.</p>
+  } @else {
+    <div class="row g-3">
+      @for (quote of quotes(); track quote.id) {
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="card h-100">
+            <div class="card-body d-flex flex-column">
+              <blockquote class="blockquote mb-3">
+                <p class="mb-0">
+                  <i class="fa-solid fa-quote-left text-muted me-1"></i>
+                  {{ quote.text }}
+                </p>
+              </blockquote>
+              <footer class="blockquote-footer mt-auto mb-3">
+                {{ quote.author }}
+              </footer>
+              <div class="d-flex justify-content-end gap-2">
+                <a [routerLink]="['/quotes', quote.id, 'edit']"
+                   class="btn btn-sm btn-outline-primary">
+                  <i class="fa-solid fa-pen"></i> Redigera
+                </a>
+                <button (click)="deleteQuote(quote.id)"
+                        class="btn btn-sm btn-outline-danger">
+                  <i class="fa-solid fa-trash"></i> Radera
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

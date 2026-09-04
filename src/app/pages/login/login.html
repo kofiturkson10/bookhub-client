@@ -1,17 +1,31 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <label>
-        Användarnamn
-        <input type="text" formControlName="username" />
-    </label>
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-10 col-md-6 col-lg-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h1 class="card-title text-center mb-4">Logga in</h1>
 
-    <label>
-        Lösenord
-        <input type="password" formControlName="password" />
-    </label>
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="username" class="form-label">Användarnamn</label>
+              <input id="username" type="text" formControlName="username" class="form-control" />
+            </div>
 
-    @if (errorMessage()) {
-        <p class="error">{{ errorMessage() }}</p>
-    }
+            <div class="mb-3">
+              <label for="password" class="form-label">Lösenord</label>
+              <input id="password" type="password" formControlName="password" class="form-control" />
+            </div>
 
-    <button type="submit" [disabled]="form.invalid">Logga in</button>
-</form>
+            @if (errorMessage()) {
+              <div class="alert alert-danger" role="alert">{{ errorMessage() }}</div>
+            }
+
+            <button type="submit" [disabled]="form.invalid" class="btn btn-primary w-100">
+              <i class="fa-solid fa-right-to-bracket"></i> Logga in
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
