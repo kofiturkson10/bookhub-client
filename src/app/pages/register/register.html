@@ -1,0 +1,19 @@
+<h1>Registrera nytt konto</h1>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div>
+        <label for="username">Användarnamn</label>
+        <input id="username" type="text" formControlName="username" />
+    </div>
+
+    <div>
+        <label for="password">Lösenord</label>
+        <input id="password" type="password" formControlName="password" />
+    </div>
+
+    @if (errorMessage()) {
+        <p>{{ errorMessage() }}</p>
+    }
+
+    <button type="submit">Skapa konto</button>
+</form>

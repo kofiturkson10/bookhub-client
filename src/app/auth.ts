@@ -2,6 +2,14 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 
+export interface RegisterRequest {
+  username: string;
+  password: string;
+}
+export interface UserResponse {
+  id: number;
+  username: string;
+}
 export interface LoginRequest {
   username: string;
   password: string;
@@ -16,6 +24,10 @@ export class Auth {
   private http = inject(HttpClient);
   private apiUrl = 'https://localhost:7000/api/auth';   // samma bas-URL som din BookService
   private readonly tokenKey = 'auth_token';
+
+  register(credentials: RegisterRequest): Observable<UserResponse> {
+    return this.http.post<UserResponse>(`${this.apiUrl}/register`, credentials);
+  }
 
   login(credentials: LoginRequest): Observable<TokenResponse> {
     return this.http.post<TokenResponse>(`${this.apiUrl}/login`, credentials).pipe(

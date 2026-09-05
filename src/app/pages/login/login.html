@@ -5,6 +5,12 @@
         <div class="card-body">
           <h1 class="card-title text-center mb-4">Logga in</h1>
 
+          @if (registered()) {
+            <div class="alert alert-success" role="alert">
+              Kontot skapades. Du kan nu logga in.
+            </div>
+          }
+
           <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="mb-3">
               <label for="username" class="form-label">Användarnamn</label>
@@ -23,7 +29,12 @@
             <button type="submit" [disabled]="form.invalid" class="btn btn-primary w-100">
               <i class="fa-solid fa-right-to-bracket"></i> Logga in
             </button>
+
           </form>
+
+          <p class="text-center mt-3 mb-0">
+            Har du inget konto? <a routerLink="/register">Registrera dig</a>
+          </p>
         </div>
       </div>
     </div>
