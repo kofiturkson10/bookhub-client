@@ -3,11 +3,10 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { BookService } from '../../services/book';
 import { Book } from '../../models/book';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-books',
-  imports: [RouterLink, DatePipe, ReactiveFormsModule],
+  imports: [DatePipe, ReactiveFormsModule],
   templateUrl: './books.html',
   styleUrl: './books.scss',
 })
@@ -20,6 +19,8 @@ export class Books implements OnInit {
   showAddModal = signal(false);
   saving = signal(false);
   addError = signal<string | null>(null);
+  editingId = signal<number | null>(null);
+  pendingDelete = signal<Book | null>(null);
 
   addForm = this.fb.nonNullable.group({
     title: ['', Validators.required],
@@ -35,6 +36,7 @@ export class Books implements OnInit {
   }
 
   openAdd(): void {
+    this.editingId.set(null);
     this.addForm.reset();
     this.addError.set(null);
     this.showAddModal.set(true);
@@ -42,6 +44,7 @@ export class Books implements OnInit {
 
   closeAdd(): void {
     this.showAddModal.set(false);
+    this.editingId.set(null);
   }
 
   submitAdd(): void {
@@ -63,12 +66,59 @@ export class Books implements OnInit {
     });
   }
 
-  deleteBook(id: number): void {
-    if (!confirm('Är du säker på att du vill radera boken?')) return;
+  openEdit(book: Book): void {
+    this.editingId.set(book.id);
+    this.addError.set(null);
+    this.addForm.setValue({
+      title: book.title,
+      author: book.author,
+      publishedDate: book.publishedDate,
+    });
+    this.showAddModal.set(true);
+  }
 
-    this.bookService.deleteBook(id).subscribe({
-      next: () => this.books = this.books.filter(b => b.id !== id),
-      error: (err) => console.error('Kunde inte radera boken', err)
+  submitEdit(): void {
+    const id = this.editingId();
+    if (id === null || this.addForm.invalid || this.saving()) return;
+
+    this.saving.set(true);
+    this.addError.set(null);
+
+    this.bookService.updateBook(id, this.addForm.getRawValue()).subscribe({
+      next: () => {
+        const values = this.addForm.getRawValue();
+        this.books = this.books.map(b => b.id === id ? { ...b, ...values } : b);
+        this.saving.set(false);
+        this.closeAdd();
+      },
+      error: () => {
+        this.addError.set('Kunde inte uppdatera boken.');
+        this.saving.set(false);
+      },
+    });
+  }
+
+  askDelete(book: Book): void {
+    this.pendingDelete.set(book);
+  }
+
+  cancelDelete(): void {
+    this.pendingDelete.set(null);
+  }
+
+  confirmDelete(): void {
+    const book = this.pendingDelete();
+    if (!book) return;
+
+    this.bookService.deleteBook(book.id).subscribe({
+      next: () => {
+        this.books = this.books.filter(b => b.id !== book.id);
+        this.pendingDelete.set(null);
+      },
+      error: (err) => {
+        console.error('Kunde inte radera boken', err);
+        this.pendingDelete.set(null);
+      },
     });
   }
 }

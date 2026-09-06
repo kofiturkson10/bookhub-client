@@ -10,7 +10,7 @@
     <div class="app-modal" (click)="closeAdd()">
       <div class="app-modal__panel" (click)="$event.stopPropagation()">
         <div class="app-modal__header">
-          <h2 class="app-modal__title">Ny bok</h2>
+          <h2 class="app-modal__title">{{ editingId() === null ? 'Ny bok' : 'Redigera bok' }}</h2>
           <button type="button" class="app-modal__close"
                   (click)="closeAdd()" aria-label="Stäng">
             <i class="fa-solid fa-xmark"></i>
@@ -22,7 +22,7 @@
             <div class="alert alert-danger" role="alert">{{ addError() }}</div>
           }
 
-          <form [formGroup]="addForm" (ngSubmit)="submitAdd()">
+          <form [formGroup]="addForm" (ngSubmit)="editingId() === null ? submitAdd() : submitEdit()">
             <div class="mb-3">
               <label for="book-title" class="form-label">Titel</label>
               <input id="book-title" type="text" formControlName="title"
@@ -47,11 +47,38 @@
               </button>
               <button type="submit" class="btn btn-primary"
                       [disabled]="addForm.invalid || saving()">
-                <i class="fa-solid fa-plus"></i>
+                <i class="fa-solid" [class.fa-plus]="editingId() === null" [class.fa-check]="editingId() !== null"></i>
                 {{ saving() ? 'Sparar…' : 'Spara' }}
               </button>
             </div>
           </form>
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (pendingDelete(); as book) {
+    <div class="app-modal" (click)="cancelDelete()">
+      <div class="app-modal__panel" (click)="$event.stopPropagation()">
+        <div class="app-modal__header">
+          <h2 class="app-modal__title">Radera bok</h2>
+          <button type="button" class="app-modal__close"
+                  (click)="cancelDelete()" aria-label="Stäng">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <div class="app-modal__body">
+          <p class="mb-4">Är du säker på att du vill radera "{{ book.title }}"?</p>
+
+          <div class="d-flex justify-content-end gap-2">
+            <button type="button" class="btn btn-outline-secondary" (click)="cancelDelete()">
+              Avbryt
+            </button>
+            <button type="button" class="btn btn-danger" (click)="confirmDelete()">
+              <i class="fa-solid fa-trash"></i> Radera
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -77,11 +104,11 @@
               <td>{{ book.author }}</td>
               <td>{{ book.publishedDate | date:'yyyy-MM-dd' }}</td>
               <td class="text-end">
-                <a [routerLink]="['/books', book.id, 'edit']"
-                   class="btn btn-sm btn-outline-primary me-1">
+                <button type="button" (click)="openEdit(book)"
+                        class="btn btn-sm btn-outline-primary me-1">
                   <i class="fa-solid fa-pen"></i>
-                </a>
-                <button (click)="deleteBook(book.id)"
+                </button>
+                <button type="button" (click)="askDelete(book)"
                         class="btn btn-sm btn-outline-danger">
                   <i class="fa-solid fa-trash"></i>
                 </button>
