@@ -2,11 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Quote } from '../models/quote';
+import { environment } from '../../environments/environment.development';
 
 @Injectable({ providedIn: 'root' })
 export class QuoteService {
   private http = inject(HttpClient);
-  private baseUrl = 'https://localhost:7000/api/quotes';
+  private baseUrl = `${environment.apiBaseUrl}/quotes`;
 
   getQuotes(): Observable<Quote[]> {
     return this.http.get<Quote[]>(this.baseUrl);
