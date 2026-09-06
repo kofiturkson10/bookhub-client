@@ -1,0 +1,21 @@
+/* ---------- Citat-sidan ---------- */
+
+$quote-page-bg:      #ffffff;  // ljust läge
+$quote-page-bg-dark: #211f1b;  // mörkt läge
+$quote-page-gap: 2rem; 
+$quote-h1-size: 2.0rem;
+
+:host {
+  display: block;
+  margin-top: $quote-page-gap;
+  background-color: $quote-page-bg;
+}
+
+:host-context([data-bs-theme="dark"]) {
+  background-color: $quote-page-bg-dark;
+}
+
+:host h1 {
+  font-size: $quote-h1-size;
+  font-weight: 490;
+}

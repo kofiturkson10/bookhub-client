@@ -1,42 +1,45 @@
-<div class="container my-5">
-  <div class="row justify-content-center">
-    <div class="col-12 col-sm-10 col-md-6 col-lg-4">
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <h1 class="card-title text-center mb-4">Logga in</h1>
-
-          @if (registered()) {
-            <div class="alert alert-success" role="alert">
-              Kontot skapades. Du kan nu logga in.
-            </div>
-          }
-
-          <form [formGroup]="form" (ngSubmit)="onSubmit()">
-            <div class="mb-3">
-              <label for="username" class="form-label">Användarnamn</label>
-              <input id="username" type="text" formControlName="username" class="form-control" />
-            </div>
-
-            <div class="mb-3">
-              <label for="password" class="form-label">Lösenord</label>
-              <input id="password" type="password" formControlName="password" class="form-control" />
-            </div>
-
-            @if (errorMessage()) {
-              <div class="alert alert-danger" role="alert">{{ errorMessage() }}</div>
-            }
-
-            <button type="submit" [disabled]="form.invalid" class="btn btn-primary w-100">
-              <i class="fa-solid fa-right-to-bracket"></i> Logga in
-            </button>
-
-          </form>
-
-          <p class="text-center mt-3 mb-0">
-            Har du inget konto? <a routerLink="/register">Registrera dig</a>
-          </p>
-        </div>
-      </div>
+<div class="auth-layout">
+  <aside class="auth-brand">
+    <div class="auth-brand__inner">
+      <img src="/bookhub-logo-full.png"
+       alt="BookHub - Böcker att läsa. Ord att minnas."
+       class="auth-brand__logo">
     </div>
-  </div>
+  </aside>
+
+  <main class="auth-form">
+    <div class="auth-form__card">
+      <h1 class="auth-form__title">Logga in</h1>
+
+      @if (registered()) {
+        <div class="alert alert-success" role="alert">
+          Kontot skapades. Logga in nedan.
+        </div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="username" class="form-label">Användarnamn</label>
+          <input id="username" type="text" formControlName="username" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Lösenord</label>
+          <input id="password" type="password" formControlName="password" class="form-control" />
+        </div>
+
+        @if (errorMessage()) {
+          <div class="alert alert-danger" role="alert">{{ errorMessage() }}</div>
+        }
+
+        <button type="submit" [disabled]="form.invalid" class="btn btn-primary w-100">
+          <i class="fa-solid fa-right-to-bracket"></i> Logga in
+        </button>
+      </form>
+
+      <p class="text-center mt-3 mb-0">
+        Har du inget konto? <a routerLink="/register">Registrera dig</a>
+      </p>
+    </div>
+  </main>
 </div>

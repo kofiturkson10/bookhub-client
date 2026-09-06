@@ -1,8 +1,8 @@
 @if (auth.isLoggedIn()) {
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg app-navbar" data-bs-theme="dark">
     <div class="container">
       <a class="navbar-brand" routerLink="/books" (click)="closeMenu()">
-        <i class="fa-solid fa-book"></i> BookHub
+        <img src="/bookhub-mark.png" alt="" class="app-navbar__logo"> BookHub
       </a>
 
       <button
@@ -11,7 +11,11 @@
         (click)="toggleMenu()"
         [attr.aria-expanded]="menuOpen()"
         aria-label="Växla navigering">
-        <span class="navbar-toggler-icon"></span>
+        <span class="app-navbar__burger" [class.is-open]="menuOpen()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
       </button>
 
       <div class="collapse navbar-collapse" [class.show]="menuOpen()" id="mainNav">

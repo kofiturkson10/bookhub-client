@@ -1,19 +1,39 @@
-<h1>Registrera nytt konto</h1>
-
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div>
-        <label for="username">Användarnamn</label>
-        <input id="username" type="text" formControlName="username" />
+<div class="auth-layout">
+  <aside class="auth-brand">
+    <div class="auth-brand__inner">
+      <img src="/bookhub-logo-full.png"
+       alt="BookHub - Böcker att läsa. Ord att minnas."
+       class="auth-brand__logo">
     </div>
+  </aside>
 
-    <div>
-        <label for="password">Lösenord</label>
-        <input id="password" type="password" formControlName="password" />
+  <main class="auth-form">
+    <div class="auth-form__card">
+      <h1 class="auth-form__title">Skapa konto</h1>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="username" class="form-label">Användarnamn</label>
+          <input id="username" type="text" formControlName="username" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Lösenord</label>
+          <input id="password" type="password" formControlName="password" class="form-control" />
+        </div>
+
+        @if (errorMessage()) {
+          <div class="alert alert-danger" role="alert">{{ errorMessage() }}</div>
+        }
+
+        <button type="submit" [disabled]="form.invalid" class="btn btn-primary w-100">
+          <i class="fa-solid fa-user-plus"></i> Skapa konto
+        </button>
+      </form>
+
+      <p class="text-center mt-3 mb-0">
+        Har du redan ett konto? <a routerLink="/login">Logga in</a>
+      </p>
     </div>
-
-    @if (errorMessage()) {
-        <p>{{ errorMessage() }}</p>
-    }
-
-    <button type="submit">Skapa konto</button>
-</form>
+  </main>
+</div>

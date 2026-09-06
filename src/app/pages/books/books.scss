@@ -1,0 +1,21 @@
+/* ---------- Bok-sidan ---------- */
+
+$book-page-bg:      #f5efe3;  // ljust läge 
+$book-page-bg-dark: #211f1b;  // mörkt läge 
+$book-page-gap: 3rem;
+$book-h1-size: 2.0rem;
+
+:host {
+  display: block;
+  margin-top: $book-page-gap;
+  background-color: $book-page-bg;
+}
+
+:host-context([data-bs-theme="dark"]) {
+  background-color: $book-page-bg-dark;
+}
+
+:host h1 {
+  font-size: $book-h1-size;
+  font-weight: 490;   // matcha login-rubrikens ärvda vikt
+}

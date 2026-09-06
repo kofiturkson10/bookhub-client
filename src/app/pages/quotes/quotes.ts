@@ -8,6 +8,7 @@ import { RouterLink } from '@angular/router';
   standalone: true,
   imports: [RouterLink],
   templateUrl: './quotes.html',
+  styleUrl: './quotes.scss'
 })
 export class Quotes implements OnInit {
   private quoteService = inject(QuoteService);
