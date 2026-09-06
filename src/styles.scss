@@ -22,6 +22,89 @@ $body-color-dark: #e6e0d4;
   --bs-card-bg: #262420;
 }
 
+
+/* ---------- Modal (delad: böcker + citat) ---------- */
+// Signal-driven modal (ingen Bootstrap-JS). Används via .app-modal* på
+// bok- och citat-sidan. Ändra utseendet här på ett ställe.
+
+$modal-backdrop:      rgba(0, 0, 0, 0.45);
+$modal-bg:            #f5f1e8;   // ljust: som dina kort
+$modal-bg-dark:       #262420;   // mörkt: som dina kort
+$modal-border-dark:   rgba(255, 255, 255, 0.10);
+$modal-radius:        12px;
+$modal-max-width:     32rem;
+
+.app-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: $modal-backdrop;
+  animation: app-modal-fade .2s ease;
+}
+
+.app-modal__panel {
+  width: 100%;
+  max-width: $modal-max-width;
+  background-color: $modal-bg;
+  border-radius: $modal-radius;
+  box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.25);
+  animation: app-modal-pop .2s ease;
+}
+[data-bs-theme="dark"] .app-modal__panel {
+  background-color: $modal-bg-dark;
+  border: 1px solid $modal-border-dark;
+}
+
+.app-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+[data-bs-theme="dark"] .app-modal__header {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.app-modal__title {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.app-modal__close {
+  border: 0;
+  background: transparent;
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.7;
+}
+.app-modal__close:hover { opacity: 1; }
+
+.app-modal__body {
+  padding: 1.5rem;
+}
+
+@keyframes app-modal-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes app-modal-pop {
+  from { opacity: 0; transform: translateY(0.5rem) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-modal,
+  .app-modal__panel { animation: none; }
+}
+
+
 /* ---------- Navbar ---------- */
 
 // Navbarens egen nyans (tema).

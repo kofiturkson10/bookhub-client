@@ -1,10 +1,61 @@
 <div class="container py-4">
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h1 class="mb-0">Böcker</h1>
-    <a routerLink="/books/new" class="btn btn-primary">
+    <button type="button" (click)="openAdd()" class="btn btn-primary">
       <i class="fa-solid fa-plus"></i> Lägg till ny bok
-    </a>
+    </button>
   </div>
+
+  @if (showAddModal()) {
+    <div class="app-modal" (click)="closeAdd()">
+      <div class="app-modal__panel" (click)="$event.stopPropagation()">
+        <div class="app-modal__header">
+          <h2 class="app-modal__title">Ny bok</h2>
+          <button type="button" class="app-modal__close"
+                  (click)="closeAdd()" aria-label="Stäng">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <div class="app-modal__body">
+          @if (addError()) {
+            <div class="alert alert-danger" role="alert">{{ addError() }}</div>
+          }
+
+          <form [formGroup]="addForm" (ngSubmit)="submitAdd()">
+            <div class="mb-3">
+              <label for="book-title" class="form-label">Titel</label>
+              <input id="book-title" type="text" formControlName="title"
+                     class="form-control" />
+            </div>
+
+            <div class="mb-3">
+              <label for="book-author" class="form-label">Författare</label>
+              <input id="book-author" type="text" formControlName="author"
+                     class="form-control" />
+            </div>
+
+            <div class="mb-3">
+              <label for="book-date" class="form-label">Publiceringsdatum</label>
+              <input id="book-date" type="date" formControlName="publishedDate"
+                     class="form-control" />
+            </div>
+
+            <div class="d-flex justify-content-end gap-2">
+              <button type="button" class="btn btn-outline-secondary" (click)="closeAdd()">
+                Avbryt
+              </button>
+              <button type="submit" class="btn btn-primary"
+                      [disabled]="addForm.invalid || saving()">
+                <i class="fa-solid fa-plus"></i>
+                {{ saving() ? 'Sparar…' : 'Spara' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  }
 
   @if (books.length == 0) {
     <p class="text-muted">Inga böcker än</p>
