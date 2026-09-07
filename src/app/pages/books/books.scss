@@ -1,6 +1,6 @@
 /* ---------- Bok-sidan ---------- */
 
-$book-page-bg:      #f5efe3;  // ljust läge 
+$book-page-bg:      #ffffff;  // ljust läge 
 $book-page-bg-dark: #211f1b;  // mörkt läge 
 $book-page-gap: 3rem;
 $book-h1-size: 2.0rem;
@@ -17,5 +17,61 @@ $book-h1-size: 2.0rem;
 
 :host h1 {
   font-size: $book-h1-size;
-  font-weight: 490;   // matcha login-rubrikens ärvda vikt
+  font-weight: 490;
+}
+
+/* Mobil: gör tabellen till kort */
+
+@media (max-width: 767.98px) {
+  .app-book-table {
+    thead {
+      display: none;
+    }
+
+    --bs-table-bg: transparent;
+    --bs-table-striped-bg: transparent;
+    --bs-table-accent-bg: transparent;
+
+    tr {
+      display: block;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(0, 0, 0, 0.125);
+      border-radius: 0.5rem;
+      padding: 1rem 1.25rem;
+      background-color: #f5f1e8;
+    }
+
+    td {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.15rem;
+      border: none;
+      padding: 0.4rem 0;
+      background-color: transparent;
+      word-break: break-word;
+
+      &::before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: #6c757d;
+      }
+    }
+
+    td.text-end {
+
+      flex-direction: row;
+      justify-content: flex-end;
+      padding-top: 0.5rem;
+
+      &::before {
+        content: none;
+      }
+    }
+  }
+
+  :host-context([data-bs-theme="dark"]) .app-book-table tr {
+    background-color: #262420;
+    border-color: rgba(255, 255, 255, 0.125);
+  }
 }

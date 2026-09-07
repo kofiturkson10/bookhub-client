@@ -88,7 +88,7 @@
     <p class="text-muted">Inga böcker än</p>
   } @else {
     <div class="table-responsive">
-      <table class="table table-striped table-hover align-middle">
+      <table class="table table-striped table-hover align-middle app-book-table">
         <thead>
           <tr>
             <th>Titel</th>
@@ -100,9 +100,9 @@
         <tbody>
           @for (book of books; track book.id) {
             <tr>
-              <td>{{ book.title }}</td>
-              <td>{{ book.author }}</td>
-              <td>{{ book.publishedDate | date:'yyyy-MM-dd' }}</td>
+              <td data-label="Titel">{{ book.title }}</td>
+              <td data-label="Författare">{{ book.author }}</td>
+              <td data-label="Publicerad">{{ book.publishedDate | date:'yyyy-MM-dd' }}</td>
               <td class="text-end">
                 <div class="d-inline-flex gap-1 justify-content-end">
                   <button type="button" (click)="openEdit(book)"

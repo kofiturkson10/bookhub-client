@@ -22,28 +22,30 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link" routerLink="/books" routerLinkActive="active" (click)="closeMenu()">
-              <i class="fa-solid fa-book"></i> Böcker
+              Böcker <i class="fa-solid fa-book"></i>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/quotes" routerLinkActive="active" (click)="closeMenu()">
-              <i class="fa-solid fa-quote-right"></i> Mina citat
+               Mina citat <i class="fa-solid fa-quote-right"></i>
             </a>
           </li>
         </ul>
 
-        <button class="btn btn-outline-light me-2" type="button" (click)="theme.toggle()"
-                [attr.aria-label]="theme.theme() === 'dark' ? 'Byt till ljust tema' : 'Byt till mörkt tema'">
-          @if (theme.theme() === 'dark') {
-            <i class="fa-solid fa-sun"></i>
-          } @else {
-            <i class="fa-solid fa-moon"></i>
-          }
-        </button>
+        <div class="app-navbar__actions">
+          <button class="btn btn-outline-light me-2" type="button" (click)="theme.toggle()"
+                  [attr.aria-label]="theme.theme() === 'dark' ? 'Byt till ljust tema' : 'Byt till mörkt tema'">
+            @if (theme.theme() === 'dark') {
+              <i class="fa-solid fa-sun"></i>
+            } @else {
+              <i class="fa-solid fa-moon"></i>
+            }
+          </button>
 
-        <button class="btn btn-outline-light" type="button" (click)="logout()">
-          <i class="fa-solid fa-right-from-bracket"></i> Logga ut
-        </button>
+          <button class="btn btn-outline-light" type="button" (click)="logout()">
+            <i class="fa-solid fa-right-from-bracket"></i> Logga ut
+          </button>
+        </div>
       </div>
     </div>
   </nav>
