@@ -1,4 +1,3 @@
-[bookhub-client-README-svenska.md](https://github.com/user-attachments/files/31905121/bookhub-client-README-svenska.md)
 # BookHub Client
 
 Frontend-delen för **BookHub**, en fullstack CRUD-applikation som byggts som ett LIA-projekt (lärande i arbete) med fokus på molnutveckling. Detta repository innehåller Angular 20 single-page-applikationen som använder BookHub API:t.
