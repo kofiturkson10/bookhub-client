@@ -66,5 +66,3 @@ Build-output skrivs till `dist/`. Produktionskonfigurationen använder `environm
 ## Deployment
 
 Applikationen är deployad till **Azure Static Web Apps** via **GitHub Actions**. En push till `main` triggar workflow-filen i `.github/workflows/`, som bygger Angular-applikationen och publicerar det statiska innehållet.
-
-> Obs: produktions-builds kör Angulars font-inlining-steg, som hämtar Google Fonts som refereras i `index.html`. En felaktig font-URL gör att builden misslyckas även om `ng serve` fungerar lokalt — kontrollera att fontens `<link>`-URL:er returnerar `200` innan du pushar.
