@@ -1,59 +1,71 @@
-# BookhubClient
+[bookhub-client-README-svenska.md](https://github.com/user-attachments/files/31905121/bookhub-client-README-svenska.md)
+# BookHub Client
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.35.
+Frontend-delen för **BookHub**, en fullstack CRUD-applikation som byggts som ett LIA-projekt (lärande i arbete) med fokus på molnutveckling. Detta repository innehåller Angular 20 single-page-applikationen som använder BookHub API:t.
 
-## Development server
+Backend-repository: [bookhub-api](https://github.com/kofiturkson10/bookhub-api)
+Live-app: https://wonderful-island-02ad5290f.7.azurestaticapps.net
 
-To start a local development server, run:
+## Funktioner
 
-```bash
-ng serve
-```
+- Full CRUD för **böcker** och en personlig **"Mina citat"**-vy (citat är kopplade till respektive användare)
+- Lägg till / redigera / ta bort hanteras i signalstyrda modaler (utan Bootstrap JS), inklusive en temaanpassad bekräftelsedialog för borttagning
+- **JWT-autentisering** med inloggning och registrering, en fungerande HTTP-interceptor som bifogar token samt route guards som skyddar autentiserade sidor
+- Växling mellan ljust/mörkt läge via `data-bs-theme` och en `ThemeService` (sparas i `localStorage`)
+- Responsiv navbar som kollapsar till en signalstyrd hamburgermeny
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Teknikstack
 
-## Code scaffolding
+- **Angular 20** — standalone components, signals, `@if`/`@for` control flow
+- **Bootstrap** importerat som SCSS (gör det möjligt att åsidosätta variabler före importen)
+- **Font Awesome** för ikoner
+- Reactive Forms, funktionella route guards (`CanActivateFn`), funktionell HTTP-interceptor
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Förutsättningar
 
-```bash
-ng generate component component-name
-```
+- [Node.js](https://nodejs.org/) (LTS)
+- Angular CLI:
+  ```bash
+  npm install -g @angular/cli
+  ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Köra lokalt
 
-```bash
-ng generate --help
-```
+1. **Klona och installera**
+   ```bash
+   git clone https://github.com/kofiturkson10/bookhub-client.git
+   cd bookhub-client
+   npm install
+   ```
 
-## Building
+2. **Starta utvecklingsservern**
+   ```bash
+   ng serve
+   ```
 
-To build the project run:
+   Applikationen körs på `http://localhost:4200`.
+
+3. Se till att [bookhub-api](https://github.com/kofiturkson10/bookhub-api) körs lokalt (standard `https://localhost:7000`) så att applikationen har ett backend-API att kommunicera med.
+
+## Miljökonfiguration
+
+API:ts bas-URL är inte hårdkodad — den finns i Angulars environment-filer och byts ut vid build:
+
+- `src/environments/environment.development.ts` — används av `ng serve`; pekar på det lokala API:t (`https://localhost:7000/api`).
+- `src/environments/environment.ts` — används vid produktions-builds; pekar på det deployade Azure API:t.
+
+Services läser `environment.apiBaseUrl`, så byte mellan olika miljöer kräver inga kodändringar.
+
+## Bygga för produktion
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Build-output skrivs till `dist/`. Produktionskonfigurationen använder `environment.ts`, vilket innebär att den byggda applikationen automatiskt pekar mot det deployade API:t.
 
-## Running unit tests
+## Deployment
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Applikationen är deployad till **Azure Static Web Apps** via **GitHub Actions**. En push till `main` triggar workflow-filen i `.github/workflows/`, som bygger Angular-applikationen och publicerar det statiska innehållet.
 
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+> Obs: produktions-builds kör Angulars font-inlining-steg, som hämtar Google Fonts som refereras i `index.html`. En felaktig font-URL gör att builden misslyckas även om `ng serve` fungerar lokalt — kontrollera att fontens `<link>`-URL:er returnerar `200` innan du pushar.
