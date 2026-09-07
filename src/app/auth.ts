@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
+import { environment } from '../environments/environment';
 
 export interface RegisterRequest {
   username: string;
@@ -22,7 +23,7 @@ export interface TokenResponse {
 @Injectable({ providedIn: 'root' })
 export class Auth {
   private http = inject(HttpClient);
-  private apiUrl = 'https://localhost:7000/api/auth';   // samma bas-URL som din BookService
+  private apiUrl = `${environment.apiBaseUrl}/auth`;
   private readonly tokenKey = 'auth_token';
 
   register(credentials: RegisterRequest): Observable<UserResponse> {
